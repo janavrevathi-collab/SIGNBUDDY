@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SignBuddy — Learn ASL Fingerspelling</title>
+<link rel="stylesheet" href="style.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 40 40" width="34" height="34">
+          <path d="M12 22 L12 10 a3 3 0 0 1 6 0 L18 20" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <path d="M18 20 L18 8 a3 3 0 0 1 6 0 L24 20" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <path d="M24 20 L24 10 a3 3 0 0 1 6 0 L30 22" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round"/>
+          <path d="M12 22 L12 30 a8 8 0 0 0 18 3 L30 22" stroke="currentColor" stroke-width="3" fill="none" stroke-linecap="round"/>
+        </svg>
+      </span>
+      <div>
+        <h1>SignBuddy</h1>
+        <p class="tagline">Learn ASL fingerspelling, then practice it live with your camera</p>
+      </div>
+    </div>
+    <nav class="tabs" role="tablist" aria-label="App sections">
+      <button class="tab-btn is-active" id="tab-learn" role="tab" aria-selected="true" aria-controls="panel-learn">Learn</button>
+      <button class="tab-btn" id="tab-practice" role="tab" aria-selected="false" aria-controls="panel-practice">Practice</button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- ============ LEARN PANEL ============ -->
+    <section id="panel-learn" class="panel is-active" role="tabpanel" aria-labelledby="tab-learn">
+      <div class="panel-intro">
+        <h2>Seven letters to start with</h2>
+        <p>Each card shows a <strong>finger map</strong> — a lit bar means that finger is straight, a dim bar means it's curled in. This is exactly what the camera looks for in Practice mode, so learning to read it here will make the quiz much easier.</p>
+      </div>
+      <div class="letter-grid" id="letter-grid"><!-- filled by script.js --></div>
+    </section>
+
+    <!-- ============ PRACTICE PANEL ============ -->
+    <section id="panel-practice" class="panel" role="tabpanel" aria-labelledby="tab-practice" hidden>
+      <div class="practice-layout">
+
+        <div class="camera-card">
+          <div class="camera-frame">
+            <video id="webcam" playsinline autoplay muted></video>
+            <canvas id="overlay"></canvas>
+            <div id="camera-placeholder" class="camera-placeholder">
+              <button id="start-camera" class="primary-btn">Turn on camera</button>
+              <p>SignBuddy needs camera access to see your hand. Nothing is recorded or sent anywhere — the analysis happens entirely in your browser.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-card">
+          <div class="quiz-header">
+            <span class="quiz-label">Show this letter</span>
+            <div class="target-letter" id="target-letter">B</div>
+          </div>
+
+          <div class="finger-map" id="live-finger-map" aria-label="Live detected finger positions">
+            <!-- filled by script.js -->
+          </div>
+
+          <p class="status-msg" id="status-msg">Waiting for camera…</p>
+
+          <div class="hold-track">
+            <div class="hold-fill" id="hold-fill"></div>
+          </div>
+
+          <div class="quiz-footer">
+            <div class="score">Score: <span id="score">0</span> / <span id="attempts">0</span></div>
+            <button class="secondary-btn" id="skip-btn">Skip letter</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>Built for the AI Sign Language Helper challenge · Hand tracking by <a href="https://developers.google.com/mediapipe" target="_blank" rel="noopener">Google MediaPipe</a> (Apache 2.0) · Letter set covers B, I, L, U, V, W, Y — see README for how detection works.</p>
+  </footer>
+
+  <!-- MediaPipe Hands (loaded from CDN, needs internet access) -->
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+  <script src="script.js"></script>
+</body>
+</html>

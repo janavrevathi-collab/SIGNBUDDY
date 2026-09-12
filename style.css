@@ -1,0 +1,183 @@
+/* ==========================================================
+   SignBuddy — design tokens
+   Palette: deep pine teal workshop, warm gold accent for
+   "extended finger", muted sage for "curled finger".
+   Display type: Fredoka (rounded, friendly, not childish).
+   Body type: Work Sans (clean, legible at small sizes).
+   ========================================================== */
+
+:root{
+  --ink:        #16302B;   /* deep pine teal — page background */
+  --surface:    #1E3E37;   /* card surface, one step lighter    */
+  --surface-2:  #274B43;   /* nested surface / hover             */
+  --paper:      #F4EFE3;   /* warm off-white text on dark        */
+  --paper-dim:  #C9D8D2;   /* secondary text on dark             */
+  --gold:       #E3A63B;   /* extended finger / primary accent   */
+  --gold-dim:   #a5762a;
+  --coral:      #E2694B;   /* incorrect / stop states            */
+  --sage:       #3F6259;   /* curled finger / muted bar           */
+  --sage-line:  #2A4B43;   /* hairline borders on dark surfaces  */
+  --radius-card: 18px;
+  --radius-pill: 999px;
+  --font-display: 'Fredoka', system-ui, sans-serif;
+  --font-body: 'Work Sans', system-ui, sans-serif;
+}
+
+*{ box-sizing: border-box; }
+
+html, body{
+  margin: 0;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-body);
+}
+
+body{
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+h1, h2{ font-family: var(--font-display); margin: 0; }
+
+/* ---------------- topbar ---------------- */
+
+.topbar{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 28px clamp(20px, 5vw, 56px) 20px;
+  border-bottom: 1px solid var(--sage-line);
+}
+
+.brand{ display: flex; align-items: center; gap: 12px; }
+.brand-mark{ color: var(--gold); flex-shrink: 0; }
+.brand h1{ font-size: 26px; font-weight: 600; letter-spacing: 0.2px; }
+.tagline{ margin: 4px 0 0; color: var(--paper-dim); font-size: 14px; max-width: 46ch; }
+
+.tabs{ display: flex; gap: 6px; background: var(--surface); padding: 4px; border-radius: var(--radius-pill); }
+.tab-btn{
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 14px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--paper-dim);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.tab-btn:hover{ color: var(--paper); }
+.tab-btn.is-active{ background: var(--gold); color: var(--ink); }
+.tab-btn:focus-visible{ outline: 2px solid var(--gold); outline-offset: 2px; }
+
+/* ---------------- layout ---------------- */
+
+main{ flex: 1; padding: 36px clamp(20px, 5vw, 56px) 20px; max-width: 1180px; margin: 0 auto; width: 100%; }
+.panel[hidden]{ display: none; }
+
+.panel-intro{ max-width: 62ch; margin-bottom: 28px; }
+.panel-intro h2{ font-size: 22px; font-weight: 600; margin-bottom: 10px; }
+.panel-intro p{ color: var(--paper-dim); line-height: 1.55; }
+.panel-intro strong{ color: var(--gold); font-weight: 600; }
+
+/* ---------------- letter grid (Learn) ---------------- */
+
+.letter-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 16px;
+}
+
+.letter-card{
+  background: var(--surface);
+  border: 1px solid var(--sage-line);
+  border-radius: var(--radius-card);
+  padding: 20px;
+}
+
+.letter-card-head{ display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 14px; }
+.letter-card-head .letter{ font-family: var(--font-display); font-size: 34px; font-weight: 600; color: var(--gold); }
+.letter-card-head .word{ font-size: 12px; color: var(--paper-dim); }
+
+.letter-card p.desc{ font-size: 13px; line-height: 1.5; color: var(--paper-dim); margin: 14px 0 0; }
+
+/* ---------------- finger map ---------------- */
+
+.finger-map{ display: flex; gap: 8px; align-items: flex-end; height: 64px; }
+.finger-bar{
+  flex: 1;
+  border-radius: 8px;
+  background: var(--sage);
+  position: relative;
+  transition: background 0.12s ease, transform 0.12s ease, height 0.12s ease;
+}
+.finger-bar[data-extended="true"]{ background: var(--gold); }
+.finger-bar.thumb{ height: 44%; }
+.finger-bar.index, .finger-bar.pinky{ height: 68%; }
+.finger-bar.middle{ height: 100%; }
+.finger-bar.ring{ height: 82%; }
+.finger-bar span{
+  position: absolute; bottom: -20px; left: 0; right: 0; text-align: center;
+  font-size: 10px; color: var(--paper-dim); letter-spacing: 0.3px;
+}
+
+/* ---------------- Practice layout ---------------- */
+
+.practice-layout{ display: grid; grid-template-columns: 1.3fr 1fr; gap: 20px; align-items: start; }
+@media (max-width: 860px){ .practice-layout{ grid-template-columns: 1fr; } }
+
+.camera-card{ background: var(--surface); border: 1px solid var(--sage-line); border-radius: var(--radius-card); padding: 14px; }
+.camera-frame{ position: relative; width: 100%; aspect-ratio: 4 / 3; border-radius: 12px; overflow: hidden; background: #0F221D; }
+#webcam, #overlay{ position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+#webcam{ transform: scaleX(-1); }
+#overlay{ transform: scaleX(-1); }
+
+.camera-placeholder{
+  position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 14px; text-align: center; padding: 24px; background: rgba(15,34,29,0.92);
+}
+.camera-placeholder p{ max-width: 34ch; font-size: 13px; color: var(--paper-dim); line-height: 1.5; margin: 0; }
+
+.primary-btn{
+  font-family: var(--font-body); font-weight: 600; font-size: 14px; padding: 12px 22px;
+  background: var(--gold); color: var(--ink); border: none; border-radius: var(--radius-pill); cursor: pointer;
+}
+.primary-btn:hover{ background: #efb454; }
+.secondary-btn{
+  font-family: var(--font-body); font-weight: 500; font-size: 13px; padding: 9px 16px;
+  background: transparent; color: var(--paper-dim); border: 1px solid var(--sage-line); border-radius: var(--radius-pill); cursor: pointer;
+}
+.secondary-btn:hover{ color: var(--paper); border-color: var(--paper-dim); }
+
+.quiz-card{ background: var(--surface); border: 1px solid var(--sage-line); border-radius: var(--radius-card); padding: 24px; }
+.quiz-header{ display: flex; align-items: center; justify-content: space-between; margin-bottom: 22px; }
+.quiz-label{ font-size: 13px; color: var(--paper-dim); }
+.target-letter{ font-family: var(--font-display); font-size: 52px; font-weight: 700; color: var(--gold); line-height: 1; }
+
+#live-finger-map{ margin-bottom: 30px; }
+
+.status-msg{ min-height: 20px; font-size: 14px; font-weight: 500; margin: 0 0 14px; }
+.status-msg[data-state="correct"]{ color: var(--gold); }
+.status-msg[data-state="wrong"]{ color: var(--coral); }
+.status-msg[data-state="idle"]{ color: var(--paper-dim); }
+
+.hold-track{ height: 6px; background: var(--sage-line); border-radius: var(--radius-pill); overflow: hidden; margin-bottom: 20px; }
+.hold-fill{ height: 100%; width: 0%; background: var(--gold); transition: width 0.05s linear; }
+
+.quiz-footer{ display: flex; align-items: center; justify-content: space-between; }
+.score{ font-size: 14px; color: var(--paper-dim); }
+.score span{ color: var(--paper); font-weight: 600; }
+
+/* ---------------- footer ---------------- */
+
+.site-footer{ padding: 20px clamp(20px, 5vw, 56px) 30px; text-align: center; }
+.site-footer p{ font-size: 12px; color: var(--paper-dim); max-width: 70ch; margin: 0 auto; }
+.site-footer a{ color: var(--gold); }
+
+@media (prefers-reduced-motion: reduce){
+  *{ transition: none !important; }
+}
